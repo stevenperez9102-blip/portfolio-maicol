@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maicol Peralta — Desarrollador Web Junior</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0a0a0f;--bg2:#111118;--bg3:#16161e;--accent:#7c6ff7;--accent2:#b8b0ff;--text:#f0eeff;--muted:#8886a8;--border:rgba(124,111,247,0.18);--card:rgba(255,255,255,0.03)}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+    .blob{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+    .blob-1{width:600px;height:600px;background:rgba(124,111,247,0.12);top:-200px;right:-200px}
+    .blob-2{width:400px;height:400px;background:rgba(184,176,255,0.07);bottom:10%;left:-150px}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(10,10,15,0.6)}
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--text);text-decoration:none;letter-spacing:-0.02em}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:0.9rem;transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 3rem;max-width:1100px;margin:0 auto}
+    .hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(124,111,247,0.1);border:1px solid var(--border);border-radius:100px;padding:.35rem 1rem;font-size:.8rem;color:var(--accent2);margin-bottom:2rem;width:fit-content}
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+    h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem}
+    h1 .line{display:block}
+    h1 .highlight{color:var(--accent)}
+    .hero-desc{font-size:1.15rem;color:var(--muted);max-width:520px;margin-bottom:2.5rem;font-weight:300}
+    .hero-cta{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.8rem;border-radius:100px;font-size:.9rem;font-family:'DM Sans',sans-serif;font-weight:400;text-decoration:none;transition:all .25s;cursor:pointer;border:none}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{background:#9288f9;transform:translateY(-2px)}
+    .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+    .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+    .btn-green{background:#25D366;color:#fff}
+    .btn-green:hover{background:#1ebe5a;transform:translateY(-2px)}
+    .scroll-hint{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:.75rem;color:var(--muted);font-size:.8rem}
+    .scroll-line{width:40px;height:1px;background:var(--muted);position:relative;overflow:hidden}
+    .scroll-line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:slide 2s infinite}
+    @keyframes slide{to{left:100%}}
+    section{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:6rem 3rem}
+    .section-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;font-weight:500}
+    h2{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;margin-bottom:3rem}
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+    .about-text p{color:var(--muted);margin-bottom:1rem;font-size:1rem}
+    .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;text-align:center}
+    .stat-number{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:var(--accent)}
+    .stat-label{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+    .about-edu{display:flex;flex-direction:column;gap:1rem}
+    .edu-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .3s}
+    .edu-card:hover{border-color:var(--accent)}
+    .edu-year{font-size:.75rem;color:var(--accent);font-weight:500;margin-bottom:.4rem;letter-spacing:.05em}
+    .edu-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.2rem}
+    .edu-title{font-size:.85rem;color:var(--muted)}
+    /* PROJECTS */
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+    .project-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:all .3s}
+    .project-card:hover{border-color:var(--accent);transform:translateY(-6px);background:rgba(124,111,247,0.05)}
+    .project-img{width:100%;aspect-ratio:16/9;background:var(--bg3);border-bottom:1px solid var(--border);overflow:hidden;position:relative}
+    .project-img-inner{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+    .aurum-visual{width:100%;height:100%;background:linear-gradient(135deg,#1a1025 0%,#0d0820 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+    .piano-keys{display:flex;gap:3px}
+    .key-white{width:20px;height:70px;background:#f0ecff;border-radius:0 0 4px 4px;border:1px solid #c8c0ff}
+    .key-black{width:14px;height:45px;background:#2a1f5e;border-radius:0 0 3px 3px;margin:0 -7px;z-index:1;position:relative}
+    .aurum-title{font-family:'Syne',sans-serif;font-size:.7rem;letter-spacing:.2em;color:#9d8fff;text-transform:uppercase;margin-top:4px}
+    .aska-visual{width:100%;height:100%;background:linear-gradient(135deg,#1e0d12 0%,#120a0e 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
+    .aska-circles{display:flex;gap:10px;align-items:center}
+    .aska-circle{border-radius:50%;border:1.5px solid rgba(255,100,130,0.4)}
+    .aska-title-vis{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:.3em;color:#ff7090}
+    .project-body{padding:1.5rem}
+    .project-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1.2rem;margin-bottom:.5rem}
+    .project-desc{color:var(--muted);font-size:.9rem;margin-bottom:1.2rem;line-height:1.6}
+    .project-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+    .tag{background:rgba(124,111,247,0.1);border:1px solid rgba(124,111,247,0.2);color:var(--accent2);font-size:.75rem;padding:.25rem .75rem;border-radius:100px}
+    .project-links{display:flex;gap:.75rem}
+    .project-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--accent);font-size:.85rem;text-decoration:none;transition:color .2s}
+    .project-link:hover{color:var(--accent2)}
+    .project-link svg{width:14px;height:14px}
+    /* SKILLS */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+    .skill-group{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:all .3s}
+    .skill-group:hover{border-color:var(--accent)}
+    .skill-group-title{font-family:'Syne',sans-serif;font-size:.85rem;font-weight:700;color:var(--accent2);margin-bottom:1rem;letter-spacing:.05em}
+    .skill-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+    .skill-list li{font-size:.9rem;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+    .skill-list li::before{content:'';width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0}
+    /* CONTACT */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+    .contact-box{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem}
+    .contact-box h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.3rem;margin-bottom:.75rem}
+    .contact-box p{color:var(--muted);margin-bottom:2rem;font-size:.95rem}
+    .contact-item{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+    .contact-icon{width:40px;height:40px;border-radius:10px;background:rgba(124,111,247,0.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+    .contact-label{font-size:.75rem;color:var(--muted)}
+    .contact-value{font-size:.9rem;color:var(--text)}
+    .contact-actions{display:flex;flex-direction:column;gap:1rem;margin-top:0}
+    footer{position:relative;z-index:1;text-align:center;padding:2rem;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border)}
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links{display:none}.hero,section{padding-left:1.5rem;padding-right:1.5rem}.scroll-hint{left:1.5rem}.about-grid,.contact-grid{grid-template-columns:1fr;gap:2rem}}
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+ 
+  <nav>
+    <a href="#" class="nav-logo">MSP<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+ 
+  <div class="hero">
+    <div class="hero-tag">Disponible para trabajar</div>
+    <h1>
+      <span class="line">Maicol</span>
+      <span class="line highlight">Steven</span>
+      <span class="line">Peralta.</span>
+    </h1>
+    <p class="hero-desc">Desarrollador web junior en formación. Construyo interfaces responsivas con HTML, CSS y JavaScript — del código al deploy, sin atajos.</p>
+    <div class="hero-cta">
+      <a href="#proyectos" class="btn btn-primary">Ver proyectos ↓</a>
+      <a href="Maicol_Peralta.pdf" download class="btn btn-outline">Descargar CV ↓</a>
+    </div>
+    <div class="scroll-hint"><div class="scroll-line"></div>Scroll</div>
+  </div>
+ 
+  <section id="sobre-mi">
+    <p class="section-label">Quién soy</p>
+    <h2>Sobre mí</h2>
+    <div class="about-grid">
+      <div class="about-text fade-up">
+        <p>Desarrollador web junior de Carmen de Apicalá, Tolima. Apasionado por construir productos digitales reales con atención al detalle y buena experiencia de usuario.</p>
+        <p>Actualmente cursando Tecnología en Análisis y Desarrollo de Software en el SENA e Ingeniería de Telecomunicaciones en la UNAD.</p>
+        <p>Con experiencia en proyectos reales para clientes, diseño responsivo y resolución de problemas técnicos. Siempre aprendiendo, siempre construyendo.</p>
+        <div class="about-stats">
+          <div class="stat-card"><div class="stat-number">2+</div><div class="stat-label">Proyectos en vivo</div></div>
+          <div class="stat-card"><div class="stat-number">2026</div><div class="stat-label">En el mercado</div></div>
+          <div class="stat-card"><div class="stat-number">B1</div><div class="stat-label">Inglés</div></div>
+          <div class="stat-card"><div class="stat-number">100%</div><div class="stat-label">Disponibilidad</div></div>
+        </div>
+      </div>
+      <div class="about-edu fade-up" style="transition-delay:.15s">
+        <div class="edu-card">
+          <p class="edu-year">2024 – Actual</p>
+          <p class="edu-name">SENA</p>
+          <p class="edu-title">Tecnólogo en Análisis y Desarrollo de Software</p>
+        </div>
+        <div class="edu-card">
+          <p class="edu-year">2026 – Actual</p>
+          <p class="edu-name">UNAD</p>
+          <p class="edu-title">Ingeniería de Telecomunicaciones</p>
+        </div>
+        <div class="edu-card">
+          <p class="edu-year">2026 – Actual</p>
+          <p class="edu-name">Aska — Cliente real</p>
+          <p class="edu-title">Desarrollo web para cliente: interfaces responsivas y optimización</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="proyectos">
+    <p class="section-label">Trabajo</p>
+    <h2>Proyectos destacados</h2>
+    <div class="projects-grid">
+      <div class="project-card fade-up">
+        <div class="project-img">
+          <div class="project-img-inner">
+            <div class="aurum-visual">
+              <div class="piano-keys">
+                <div class="key-white"></div><div class="key-black"></div>
+                <div class="key-white"></div><div class="key-white"></div>
+                <div class="key-black"></div><div class="key-white"></div>
+                <div class="key-black"></div><div class="key-white"></div>
+              </div>
+              <div class="aurum-title">Aurum Piano Academy</div>
+            </div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-name">Aurum Piano Academy</p>
+          <p class="project-desc">Plataforma web para academia de piano de élite. Diseño elegante con experiencia de usuario orientada a la formación musical profesional.</p>
+          <div class="project-tags">
+            <span class="tag">HTML5</span><span class="tag">CSS3</span>
+            <span class="tag">JavaScript</span><span class="tag">Responsivo</span>
+          </div>
+          <div class="project-links">
+            <a href="https://aurum-piano-frontend.onrender.com/" target="_blank" class="project-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              Ver en vivo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card fade-up" style="transition-delay:.15s">
+        <div class="project-img">
+          <div class="project-img-inner">
+            <div class="aska-visual">
+              <div class="aska-circles">
+                <div class="aska-circle" style="width:60px;height:60px"></div>
+                <div class="aska-circle" style="width:40px;height:40px;border-color:rgba(255,100,130,0.7)"></div>
+                <div class="aska-circle" style="width:25px;height:25px;background:rgba(255,100,130,0.15);border-color:rgba(255,100,130,0.9)"></div>
+              </div>
+              <div class="aska-title-vis">AŞKA</div>
+            </div>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-name">AŞKA — Cliente real</p>
+          <p class="project-desc">Solución web para cliente real. Interfaces responsivas, adaptación de requerimientos y optimización del rendimiento del sitio.</p>
+          <div class="project-tags">
+            <span class="tag">HTML5</span><span class="tag">CSS3</span>
+            <span class="tag">JavaScript</span><span class="tag">Performance</span>
+          </div>
+          <div class="project-links">
+            <a href="https://aska-frontend.onrender.com/" target="_blank" class="project-link">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              Ver en vivo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="skills">
+    <p class="section-label">Herramientas</p>
+    <h2>Stack técnico</h2>
+    <div class="skills-grid">
+      <div class="skill-group fade-up">
+        <p class="skill-group-title">Frontend</p>
+        <ul class="skill-list">
+          <li>HTML5 semántico</li><li>CSS3 avanzado</li>
+          <li>JavaScript</li><li>Diseño responsivo</li><li>Accesibilidad web</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-up" style="transition-delay:.1s">
+        <p class="skill-group-title">Backend & Scripts</p>
+        <ul class="skill-list">
+          <li>Python básico</li><li>Node.js (aprendiendo)</li>
+          <li>APIs REST</li><li>Lógica de programación</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-up" style="transition-delay:.2s">
+        <p class="skill-group-title">Deploy & Herramientas</p>
+        <ul class="skill-list">
+          <li>Git & GitHub</li><li>Render</li><li>Netlify</li><li>Vercel</li>
+        </ul>
+      </div>
+      <div class="skill-group fade-up" style="transition-delay:.3s">
+        <p class="skill-group-title">Aprendiendo</p>
+        <ul class="skill-list">
+          <li>React</li><li>Tailwind CSS</li><li>Bases de datos SQL</li><li>TypeScript</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+ 
+  <section id="contacto">
+    <p class="section-label">Contacto</p>
+    <h2>Hablemos</h2>
+    <div class="contact-grid">
+      <div class="contact-box fade-up">
+        <h3>Información de contacto</h3>
+        <p>Estoy disponible para proyectos, colaboraciones o trabajo.</p>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div><div class="contact-label">Correo principal</div><div class="contact-value">ospepe19@gmail.com</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><div class="contact-label">Correo alternativo</div><div class="contact-value">stevenperez9102@gmail.com</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div><div class="contact-label">WhatsApp</div><div class="contact-value">+57 324 340 7952</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><div class="contact-label">Ubicación</div><div class="contact-value">Carmen de Apicalá, Tolima — Colombia</div></div>
+        </div>
+      </div>
+      <div class="contact-box fade-up" style="transition-delay:.15s">
+        <h3>Escríbeme ahora</h3>
+        <p>Elige el canal que prefieras. Respondo rápido.</p>
+        <div class="contact-actions">
+          <a href="https://wa.me/573243407952" target="_blank" class="btn btn-green">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            WhatsApp
+          </a>
+          <a href="mailto:ospepe19@gmail.com" class="btn btn-primary">📧 Enviar correo</a>
+          <a href="Maicol_Peralta.pdf" download class="btn btn-outline">📄 Descargar hoja de vida</a>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <footer>
+    <p>Hecho con código por Maicol Steven Peralta · Carmen de Apicalá, Tolima · 2025</p>
+  </footer>
+ 
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold: 0.1});
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html
